@@ -1,0 +1,48 @@
+Forward Pass:
+
+
+Input: x = 0.5
+
+
+- Weighted sum: z1 = w * x + b = (1) * (0.5) + (-0.5) = 0
+- Activation: a1 = sigmoid(z1) = 1 / (1 + exp(-0)) = 1/2
+
+
+- Weighted sum: z2 = w * a1 + b = (1) * (1/2) + (-0.5) = 0
+- Activation: a2 = sigmoid(z2) = 1 / (1 + exp(-0)) = 1/2
+
+- Weighted sum: z3 = w * a2 + b = (1) * (1/2) + (-0.5) = 0
+- Output: y_pred = sigmoid(z3) = 1 / (1 + exp(-0)) = 1/2
+
+Learning with Gradient Descent:
+
+
+Error (E) = Target - Output = 1 - 1/2 = 1/2
+
+
+- Output derivative (dEdy_pred) = d(sigmoid(z3)) / dz3 = (1/2) * (1 - 1/2) = 1/4
+- Error term (delta3) = dEdy_pred * dz3/da2 = (1/4) * w = 1/4
+
+
+- Hidden layer 2 derivative (dEdz2) = delta3 * d(sigmoid(z2)) / dz2 = (1/4) * (1/2) * (1 - 1/2) = (1/16)
+- Error term (delta2) = dEdz2 * dz2/da1 = (1/16) * w = 1/16
+
+
+- Hidden layer 1 derivative (dEdz1) = delta2 * d(sigmoid(z1)) / dz1 = (1/16) * (1/2) * (1 - 1/2) = (1/64)
+- Error term (delta1) = dEdz1 * dz1/dx = (1/64) * w = 1/64
+
+
+- Learning rate (η) = 0.1 (chosen arbitrarily)
+
+
+- w_new = w - η * delta * a (previous layer activation)
+  - w_hidden1 (between input and hidden layer 1): w_new = 1 - (0.1) * (1/64) * (0.5) ≈ 1
+  - w_hidden2 (between hidden layer 1 and output): w_new = 1 - (0.1) * (1/16) * (1/2) ≈ 1
+
+- b_new = b - η * delta
+  - b_hidden1: b_new = -0.5 - (0.1) * (1/64) ≈ -0.5
+  - b_hidden2: b_new = -0.5 - (0.1) * (1/16) ≈ -0.5
+
+
+
+y_pred (after second iteration) ≈ 0.56.
